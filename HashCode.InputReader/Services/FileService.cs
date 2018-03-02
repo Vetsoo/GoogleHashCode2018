@@ -10,8 +10,8 @@ namespace HashCode.Infra.InputReader.Services
 {
     public class FileService : IFileService
     {
-        private const string InputFolder = @"C:\Dev\Personal\HashCode2018\Input\";
-        private const string OutputFolder = @"C:\Dev\Personal\HashCode2018\Output\";
+        private const string InputFolder = @"C:\Dev\Personal\GoogleHashCode2018\Input\";
+        private const string OutputFolder = @"C:\Dev\Personal\GoogleHashCode2018\Output\";
 
         public FileContents ReadFile(string fileName)
         {
@@ -69,10 +69,10 @@ namespace HashCode.Infra.InputReader.Services
             }
         }
 
-        public void WriteFile(Result result)
+        public void WriteFile(string inputFile, Result result)
         {
 
-            var path = $"{OutputFolder}solution.out";
+            var path = $"{OutputFolder}{inputFile.Substring(0, inputFile.IndexOf(".", StringComparison.Ordinal))}.out";
 
             var counter = 1;
 
@@ -90,6 +90,13 @@ namespace HashCode.Infra.InputReader.Services
             }
 
             File.AppendAllText(path, sb.ToString());
+        }
+
+        public List<string> GetInputFiles()
+        {
+            var inputFiles = Directory.GetFiles(InputFolder).Select(Path.GetFileName).ToList();
+
+            return inputFiles;
         }
     }
 }

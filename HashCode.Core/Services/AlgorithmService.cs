@@ -23,7 +23,6 @@ namespace HashCode.Core.Services
 
             for (var steps = 0; steps < fileContents.NumberOfStepsInSimulation; steps++)
             {
-                Console.WriteLine(steps);
                 foreach (var vehicle in result.Vehicles.Where(x => x.StepsToGo == steps))
                 {
                     if (vehicle.StepsToGo == steps && steps != 0)
