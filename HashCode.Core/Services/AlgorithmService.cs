@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using HashCode.Core.Domain;
 using HashCode.Core.Interfaces;
 
@@ -32,13 +31,16 @@ namespace HashCode.Core.Services
 
                     foreach (var ride in fileContents.Rides.Where(x => !x.Executed))
                     {
+                        var rideDistance = Math.Abs(ride.FinishIntersection.Item1 - ride.StartIntersection.Item1) +
+                                           Math.Abs(ride.FinishIntersection.Item2 - ride.StartIntersection.Item2);
+
+                        if (ride.EarliestStart > steps)
                         if (vehicle.StepsToGo == steps)
                         {
                             var distanceToStartPostion =
                                 Math.Abs((vehicle.CurrentPosition.Item1 - ride.StartIntersection.Item1) +
                                          (vehicle.CurrentPosition.Item2 - ride.StartIntersection.Item2));
-                            var rideDistance = Math.Abs(ride.FinishIntersection.Item1 - ride.StartIntersection.Item1) +
-                                               Math.Abs(ride.FinishIntersection.Item2 - ride.StartIntersection.Item2);
+
                             var distance = distanceToStartPostion + rideDistance;
 
                             ride.Executed = true;
